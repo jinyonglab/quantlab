@@ -1,0 +1,83 @@
+# Quantitative Trading System Config
+
+system:
+  name: "InvestLab量化交易系统"
+  version: "1.0.0"
+  mode: "backtest"
+
+backtest:
+  start_date: "20230101"
+  end_date: "20240331"
+  initial_capital: 1000000
+  commission_rate: 0.0003
+  stamp_tax: 0.001
+  min_commission: 5
+  slippage: 0.001
+
+data:
+  provider: "akshare"
+  cache_dir: "./data/cache"
+  refresh_interval: 86400
+  adjust: "qfq"
+
+strategies:
+  dual_ma:
+    short_window: 20
+    long_window: 60
+    position_pct: 0.2
+  momentum:
+    lookback_days: 60
+    holding_period: 20
+    top_n: 30
+    rebalance_freq: "W"
+  multi_factor:
+    factors:
+      - name: "PE"
+        weight: 0.2
+        direction: -1
+      - name: "PB"
+        weight: 0.15
+        direction: -1
+      - name: "ROE"
+        weight: 0.25
+        direction: 1
+      - name: "RevenueGrowth"
+        weight: 0.2
+        direction: 1
+      - name: "Momentum20"
+        weight: 0.2
+        direction: 1
+    rebalance_freq: "M"
+    top_n: 50
+    max_weight: 0.05
+  bollinger:
+    window: 20
+    num_std: 2
+    position_pct: 0.15
+  etf_50_pairs:
+    entry_threshold: 2.0
+    exit_threshold: 0.5
+    lookback: 60
+  grid:
+    upper_price: 1.10
+    lower_price: 0.90
+    grid_num: 10
+    position_pct: 0.1
+
+risk:
+  max_position_pct: 0.3
+  max_total_position: 0.8
+  max_drawdown: 0.15
+  stop_loss: 0.07
+  take_profit: 0.20
+
+trading:
+  executor: "simulation"
+  order_type: "limit"
+  split_orders: true
+  split_pct: 0.2
+
+logging:
+  level: "INFO"
+  file: "./logs/trading.log"
+  console: true
