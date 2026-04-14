@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InvestLab 量化交易系统</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>InvestLab 量化交易系统</h1>
+            <p class="subtitle">A股量化策略回测平台</p>
+        </header>
+        
+        <main>
+            <div class="config-panel">
+                <h2>策略配置</h2>
+                
+                <div class="form-group">
+                    <label for="strategy">选择策略:</label>
+                    <select id="strategy">
+                        <option value="dual_ma">双均线策略</option>
+                        <option value="momentum">动量策略</option>
+                        <option value="bollinger">布林带策略</option>
+                        <option value="grid">网格策略</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="symbols">股票代码 (逗号分隔):</label>
+                    <input type="text" id="symbols" value="600000,600016,600036,000001,000002">
+                    <button id="load-hs300">加载沪深300</button>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="start_date">开始日期:</label>
+                        <input type="text" id="start_date" value="20230101">
+                    </div>
+                    <div class="form-group">
+                        <label for="end_date">结束日期:</label>
+                        <input type="text" id="end_date" value="20240331">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="initial_capital">初始资金:</label>
+                    <input type="number" id="initial_capital" value="1000000">
+                </div>
+                
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" id="use_mock" checked>
+                        使用模拟数据
+                    </label>
+                </div>
+                
+                <button id="run-backtest" class="btn-primary">运行回测</button>
+            </div>
+            
+            <div class="results-panel" id="results-panel" style="display: none;">
+                <h2>回测结果</h2>
+                <div id="loading" class="loading" style="display: none;">回测运行中...</div>
+                
+                <div class="metrics">
+                    <div class="metric-card">
+                        <div class="metric-label">总收益率</div>
+                        <div class="metric-value" id="total-return">-</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">年化收益率</div>
+                        <div class="metric-value" id="annual-return">-</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">夏普比率</div>
+                        <div class="metric-value" id="sharpe-ratio">-</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">最大回撤</div>
+                        <div class="metric-value" id="max-drawdown">-</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">交易次数</div>
+                        <div class="metric-value" id="total-trades">-</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">胜率</div>
+                        <div class="metric-value" id="win-rate">-</div>
+                    </div>
+                </div>
+                
+                <div class="chart-container">
+                    <h3>权益曲线</h3>
+                    <canvas id="equity-chart"></canvas>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <script src="/static/js/chart.min.js"></script>
+    <script src="/static/js/app.js"></script>
+</body>
+</html>
